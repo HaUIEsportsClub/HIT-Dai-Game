@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd8a19097021f7449bdfcf42c5938552, type: 3}
+  m_Name: LevelDataManager
+  m_EditorClassIdentifier: 
+  levelDataList:
+  - id: 0
+    cardCoupleCount: 2
+    time: 30
+    cameraSize: 0
+  - id: 1
+    cardCoupleCount: 4
+    time: 30
+    cameraSize: 0
+  - id: 2
+    cardCoupleCount: 5
+    time: 30
+    cameraSize: 0
+  - id: 3
+    cardCoupleCount: 7
+    time: 30
+    cameraSize: 0
+  - id: 4
+    cardCoupleCount: 10
+    time: 30
+    cameraSize: 0
+  - id: 5
+    cardCoupleCount: 11
+    time: 30
+    cameraSize: 0
+  - id: 6
+    cardCoupleCount: 14
+    time: 30
+    cameraSize: 0
+  - id: 7
+    cardCoupleCount: 15
+    time: 30
+    cameraSize: 0
+  - id: 8
+    cardCoupleCount: 20
+    time: 0
+    cameraSize: 0
+  - id: 9
+    cardCoupleCount: 25
+    time: 0
+    cameraSize: 0
+  - id: 10
+    cardCoupleCount: 27
+    time: 0
+    cameraSize: 0
+  - id: 11
+    cardCoupleCount: 28
+    time: 0
+    cameraSize: 0
+  - id: 12
+    cardCoupleCount: 30
+    time: 0
+    cameraSize: 0
+  - id: 13
+    cardCoupleCount: 30
+    time: 0
+    cameraSize: 0
+  - id: 14
+    cardCoupleCount: 32
+    time: 0
+    cameraSize: 0
+  - id: 15
+    cardCoupleCount: 32
+    time: 0
+    cameraSize: 0
+  - id: 16
+    cardCoupleCount: 32
+    time: 0
+    cameraSize: 0
+  - id: 17
+    cardCoupleCount: 35
+    time: 0
+    cameraSize: 0
+  - id: 18
+    cardCoupleCount: 35
+    time: 0
+    cameraSize: 0
+  - id: 19
+    cardCoupleCount: 35
+    time: 0
+    cameraSize: 0
