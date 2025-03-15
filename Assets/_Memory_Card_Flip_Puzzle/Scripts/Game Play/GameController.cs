@@ -5,7 +5,7 @@ public class GameController : MonoBehaviour
     public static GameController Instance;
     public Card curCard1;
     public Card curCard2;
-    
+
     private void Awake()
     {
         if (Instance) return;
@@ -24,7 +24,7 @@ public class GameController : MonoBehaviour
         {
             curCard2 = card;
         }
-        
+
         CheckIfBlockClick();
     }
 
@@ -67,22 +67,27 @@ public class GameController : MonoBehaviour
         {
             return;
         }
-        
+
         if (curCard1.ID == curCard2.ID)
         {
             CoupleCardComplete();
         }
         else
         {
-            Debug.LogError("Không ăn được card");
+            Debug.Log("Không ăn được card");
             FlipDownCard();
         }
     }
 
     public void CoupleCardComplete()
     {
-        curCard1.CompleteCard(-CardConfig.xComplete);
-        curCard2.CompleteCard(CardConfig.xComplete);
+        var completePos1 = new Vector2(-CardConfig.xComplete, 0f);
+        var completePos2 = new Vector2(CardConfig.xComplete, 0f);
+        var time1 = Vector2.Distance(curCard1.transform.position, completePos1) / CardConfig.completeAnimSpeed;
+        var time2 = Vector2.Distance(curCard2.transform.position, completePos2) / CardConfig.completeAnimSpeed;
+        var time12 = time1 - time2;
+        curCard1.CompleteCard(completePos1, time1, time12 >= 0 ? 0 : -time12);
+        curCard2.CompleteCard(completePos2, time2, -time12 >= 0 ? 0 : time12);
     }
 
     private bool CanCheckLegit()

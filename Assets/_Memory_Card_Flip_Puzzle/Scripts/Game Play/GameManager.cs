@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     public LevelDataManager levelDataManager;
     public GameData gameData;
     
+    public LevelManager levelManager;
+    
     
     public Card cardPrefab;
     public Sprite cardBack;
@@ -17,6 +19,7 @@ public class GameManager : MonoBehaviour
         if (Instance) return;
 
         Instance = this;
+        Application.targetFrameRate = 60;
         //DontDestroyOnLoad(gameObject);
     }
 }

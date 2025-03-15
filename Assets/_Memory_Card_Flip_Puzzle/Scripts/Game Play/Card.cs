@@ -7,12 +7,13 @@ public class Card : MonoBehaviour
     public SpriteRenderer sr;
     public CardData cardData;
     private bool isFLipped;
-    
+
     public bool IsFlipped => isFLipped;
     public int ID => cardData.id;
 
-    private void OnEnable()
+    public void Init(CardData data)
     {
+        cardData = data;
         isFLipped = false;
     }
 
@@ -64,22 +65,17 @@ public class Card : MonoBehaviour
         sr.sprite = sprite;
     }
 
-    public void CompleteCard(float xComplete)
+    public void CompleteCard(Vector2 completePos, float time, float offsetTime)
     {
-        sr.sortingLayerName = "Card Complete";
-        var completePos = new Vector2(xComplete, 0f);
         var yBot = -Camera.main.orthographicSize;
-        
-        transform.DOScale(CardConfig.scaleComplete, CardConfig.completeAnimTime);
-        transform.DOMove(completePos, CardConfig.completeAnimTime).OnComplete(() =>
+        sr.sortingLayerName = "Card Complete";
+        transform.DOScale(CardConfig.scaleComplete, time);
+        transform.DOMove(completePos, time).SetDelay(0.25f + offsetTime).OnComplete(() =>
         {
-            transform.DOMove(transform.position, 0.25f).OnComplete(() =>
+            transform.DOMoveY(yBot - 3f, time + offsetTime).OnComplete(() =>
             {
-                transform.DOMoveY(yBot - 3f, CardConfig.completeAnimTime).OnComplete(() =>
-                {
-                    Destroy(gameObject);
-                    GameController.Instance.AllowClick();
-                });
+                Destroy(gameObject);
+                GameController.Instance.AllowClick();
             });
         });
     }
