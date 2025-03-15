@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,6 +6,7 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
     public Image blockClick;
+    public Button replayButton;
 
     private void Awake()
     {
@@ -12,6 +14,16 @@ public class UIManager : MonoBehaviour
 
         Instance = this;
         blockClick.enabled = false;
+    }
+
+    private void Start()
+    {
+        replayButton.onClick.AddListener(OnReplayClicked);
+    }
+
+    private void OnReplayClicked()
+    {
+        GameManager.Instance.LoadLevel();
     }
 
     public void BlockClick()

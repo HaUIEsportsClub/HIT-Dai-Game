@@ -70,7 +70,7 @@ public class Card : MonoBehaviour
         var yBot = -Camera.main.orthographicSize;
         sr.sortingLayerName = "Card Complete";
         transform.DOScale(CardConfig.scaleComplete, time);
-        transform.DOMove(completePos, time).SetDelay(0.25f + offsetTime).OnComplete(() =>
+        transform.DOMove(completePos, time).SetDelay(offsetTime).OnComplete(() =>
         {
             transform.DOMoveY(yBot - 3f, time + offsetTime).OnComplete(() =>
             {
