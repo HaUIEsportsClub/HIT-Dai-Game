@@ -76,15 +76,6 @@ public class GameController : MonoBehaviour
         }
         else
         {
-            Debug.Log("Không ăn được card");
-            if (curCard1 != null)
-            {
-                Debug.LogError("Card 1");
-            }
-            else
-            {
-                Debug.LogError("Card 2");
-            }
             FlipDownCard();
         }
     }
