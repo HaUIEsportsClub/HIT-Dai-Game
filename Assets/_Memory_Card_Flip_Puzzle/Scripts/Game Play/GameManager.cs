@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -19,6 +18,7 @@ public class GameManager : MonoBehaviour
         if (Instance) return;
 
         Instance = this;
+        DontDestroyOnLoad(gameObject);
         Application.targetFrameRate = 60;
     }
 
@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
         var curLevel = gameData.curLevel;
 
         LoadLevel(curLevel);
+        UIManager.Instance.SetLevel(curLevel);
     }
 
     public void LoadLevel(int level)
@@ -43,7 +44,11 @@ public class GameManager : MonoBehaviour
 
         levelManager = Instantiate(levelDataManager.LoadLevel(level), Vector3.zero, Quaternion.identity);
         levelManager.Initialize();
-
         UIManager.Instance.AllowClick();
+    }
+
+    public void RemoveCard(Card card)
+    {
+        levelManager.RemoveCard(card);
     }
 }

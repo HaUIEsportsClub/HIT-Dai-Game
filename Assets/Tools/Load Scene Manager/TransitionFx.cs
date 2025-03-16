@@ -1,17 +1,30 @@
-using DG.Tweening;
+using UnityEngine;
 using UnityEngine.UI;
 
-public class TransitionFx : Singleton<TransitionFx>
+public class TransitionFx : MonoBehaviour
 {
+    public static TransitionFx Instance;
     public Image fade;
+    public Image loading;
+
+    private void Awake()
+    {
+        if (Instance)
+        {
+            return;
+        }
+
+        Instance = this;
+    }
 
     public void StartLoadScene()
     {
-        fade.DOFade(1f, 0.5f).SetUpdate(true);
+        loading.fillAmount = 0f;
+        fade.transform.localScale = Vector3.one;
     }
 
     public void EndLoadScene()
     {
-        fade.DOFade(0f, 0.5f).SetUpdate(true);
+        fade.transform.localScale = Vector3.zero;
     }
 }

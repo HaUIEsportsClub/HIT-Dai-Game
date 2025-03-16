@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,7 +7,9 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
     public Image blockClick;
-    public Button replayButton;
+    public TextMeshProUGUI levelText;
+    public WinPopup winPopup;
+    public LosePopup losePopup;
 
     private void Awake()
     {
@@ -18,7 +21,21 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        replayButton.onClick.AddListener(OnReplayClicked);
+    }
+
+    public void SetLevel(int level)
+    {
+        levelText.text = "Level " + level;
+    }
+
+    public void ShowWinPopup()
+    {
+        winPopup.gameObject.SetActive(true);
+    }
+
+    public void ShowLosePopup()
+    {
+        losePopup.gameObject.SetActive(true);
     }
 
     private void OnReplayClicked()
