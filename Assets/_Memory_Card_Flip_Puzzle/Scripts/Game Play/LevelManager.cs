@@ -113,6 +113,22 @@ public class LevelManager : MonoBehaviour
         CreateCardData();
         SpawnCards();
     }
+    
+    public void Initialize(int total)
+    {
+        Camera.main.orthographicSize = levelData.cameraSize;
+        indexList.Clear();
+        cardIndexList.Clear();
+        int totalCard = total;
+
+        for (int i = 0; i < totalCard; i++)
+        {
+            indexList.Add(i);
+        }
+
+        CreateCardData();
+        SpawnCards();
+    }
 
     private void SpawnCards()
     {
@@ -129,6 +145,17 @@ public class LevelManager : MonoBehaviour
             Quaternion.identity);
         card.transform.SetParent(cardsParent[childIndex]);
         card.Init(GameManager.Instance.cardDataManager.cardData[idCard]);
+        cardList.Add(card);
+    }
+
+    public void RemoveCard(Card card)
+    {
+        cardList.Remove(card);
+        
+        if (cardList.Count <= 0)
+        {
+            UIManager.Instance.ShowWinPopup();
+        }
     }
 
     private void CreateCardData()

@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSound: 1
   isMusic: 1
-  curLevel: 20
+  curLevel: 1

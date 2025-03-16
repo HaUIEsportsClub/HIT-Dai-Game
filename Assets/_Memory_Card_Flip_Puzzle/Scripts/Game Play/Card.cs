@@ -70,12 +70,14 @@ public class Card : MonoBehaviour
         var yBot = -Camera.main.orthographicSize;
         sr.sortingLayerName = "Card Complete";
         transform.DOScale(CardConfig.scaleComplete, time);
-        transform.DOMove(completePos, time).SetDelay(offsetTime).OnComplete(() =>
+        transform.DOMove(completePos, time).SetDelay(0.1f + offsetTime).OnComplete(() =>
         {
             transform.DOMoveY(yBot - 3f, time + offsetTime).OnComplete(() =>
             {
-                Destroy(gameObject);
+                GameManager.Instance.RemoveCard(this);
+                PoolingManager.Despawn(gameObject);
                 GameController.Instance.AllowClick();
+                EventDispatcher.Instance.PostEvent(EventID.On_Complete_Card);
             });
         });
     }

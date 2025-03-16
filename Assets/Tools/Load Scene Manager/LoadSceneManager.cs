@@ -28,16 +28,19 @@ public class LoadSceneManager : Singleton<LoadSceneManager>
 
     private IEnumerator IELoadScene(string sceneName)
     {
-        //yield return new WaitForSeconds(0.5f);
         TransitionFx.Instance.StartLoadScene();
         var asyncLoad = SceneManager.LoadSceneAsync(sceneName);
         
-        while (!asyncLoad.isDone)
+        while (!asyncLoad!.isDone)
         {
+            float progress = asyncLoad.progress;
+            TransitionFx.Instance.loading.fillAmount = progress;
             yield return null;
         }
-        
+
+        yield return new WaitForSeconds(0.5f);
+        TransitionFx.Instance.loading.fillAmount = 1f;
+        yield return new WaitForSeconds(0.75f);
         TransitionFx.Instance.EndLoadScene();
-        //yield return new WaitForSeconds(0.5f);
     }
 }

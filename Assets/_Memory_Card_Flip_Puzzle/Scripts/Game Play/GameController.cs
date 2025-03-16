@@ -11,7 +11,7 @@ public class GameController : MonoBehaviour
         if (Instance) return;
 
         Instance = this;
-        //DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(gameObject);
     }
 
     public void SetCurrentCard(Card card)
@@ -43,6 +43,8 @@ public class GameController : MonoBehaviour
 
     public void AllowClick()
     {
+        curCard1 = null;
+        curCard2 = null;
         UIManager.Instance.AllowClick();
     }
 
@@ -75,6 +77,14 @@ public class GameController : MonoBehaviour
         else
         {
             Debug.Log("Không ăn được card");
+            if (curCard1 != null)
+            {
+                Debug.LogError("Card 1");
+            }
+            else
+            {
+                Debug.LogError("Card 2");
+            }
             FlipDownCard();
         }
     }
