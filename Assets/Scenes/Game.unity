@@ -1421,7 +1421,7 @@ MonoBehaviour:
   gameData: {fileID: 11400000, guid: 66b263dcc1f5aa140bfddfef52b67236, type: 2}
   levelManager: {fileID: 0}
   cardPrefab: {fileID: 3987729781059723042, guid: 2349361991825eb4a8c3881dbaa49452, type: 3}
-  cardBack: {fileID: 21300000, guid: 6d885d1cba68bf9488940824470fd21a, type: 3}
+  cardBack: {fileID: 21300000, guid: 0c2be4e8af88790439d6f0190557b1f0, type: 3}
 --- !u!4 &1343762699
 Transform:
   m_ObjectHideFlags: 0
