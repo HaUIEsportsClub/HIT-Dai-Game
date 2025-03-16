@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public CardDataManager cardDataManager;
     public LevelDataManager levelDataManager;
     public GameData gameData;
+    public BGData bgData;
 
     public LevelManager levelManager;
 
@@ -22,17 +23,12 @@ public class GameManager : MonoBehaviour
         Application.targetFrameRate = 60;
     }
 
-    private void Start()
-    {
-        LoadLevel();
-    }
-
     public void LoadLevel()
     {
         var curLevel = gameData.curLevel;
-
         LoadLevel(curLevel);
         UIManager.Instance.SetLevel(curLevel);
+        UIManager.Instance.coinText.text = gameData.coin.ToString();
     }
 
     public void LoadLevel(int level)

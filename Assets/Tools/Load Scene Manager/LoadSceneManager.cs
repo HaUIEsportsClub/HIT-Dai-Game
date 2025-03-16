@@ -38,9 +38,9 @@ public class LoadSceneManager : Singleton<LoadSceneManager>
             yield return null;
         }
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.25f);
         TransitionFx.Instance.loading.fillAmount = 1f;
-        yield return new WaitForSeconds(0.75f);
+        yield return new WaitForSeconds(0.25f);
         TransitionFx.Instance.EndLoadScene();
     }
 }

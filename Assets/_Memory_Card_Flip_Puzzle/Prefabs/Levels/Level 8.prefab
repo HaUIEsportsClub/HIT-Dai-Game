@@ -763,7 +763,7 @@ MonoBehaviour:
     cols: 4
     padding: 3
     cardCoupleCount: 16
-    time: 30
+    time: 70
     cameraSize: 23
   indexList: 
   cardIndexList: 

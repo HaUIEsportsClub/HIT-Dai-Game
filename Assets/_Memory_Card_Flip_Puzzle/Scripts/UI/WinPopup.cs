@@ -2,13 +2,14 @@ using UnityEngine;
 
 public class WinPopup : MonoBehaviour
 {
-    public void ReplayLevel()
-    {
+    public void NextLevel()
+    {   
+        GameManager.Instance.gameData.CheckMaxLevel();
         LoadSceneManager.Instance.LoadScene("Game");
     }
-
     public void GoToMenu()
     {
-        LoadSceneManager.Instance.LoadScene("Normal Levels");
+        GameManager.Instance.gameData.CheckMaxLevel();
+        LoadSceneManager.Instance.LoadScene("Levels");
     }
 }

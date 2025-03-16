@@ -4,11 +4,11 @@ public class LosePopup : MonoBehaviour
 {
     public void ReplayLevel()
     {
-        LoadSceneManager.Instance.LoadScene("GamePlay");
+        LoadSceneManager.Instance.LoadScene("Game");
     }
 
     public void GoToMenu()
     {
-        LoadSceneManager.Instance.LoadScene("Normal Levels");
+        LoadSceneManager.Instance.LoadScene("Levels");
     }
 }

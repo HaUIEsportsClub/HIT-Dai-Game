@@ -1,9 +1,9 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class LevelManager : MonoBehaviour
@@ -103,6 +103,7 @@ public class LevelManager : MonoBehaviour
         Camera.main.orthographicSize = levelData.cameraSize;
         indexList.Clear();
         cardIndexList.Clear();
+        
         int totalCard = GameManager.Instance.cardDataManager.cardData.Count;
 
         for (int i = 0; i < totalCard; i++)
@@ -195,6 +196,24 @@ public class LevelManager : MonoBehaviour
         var index = Random.Range(0, indexList.Count);
         indexList.RemoveAt(index);
         return index;
+    }
+
+    public IEnumerator FlipAllCards(float time)
+    {
+        for (int i = 0; i < cardList.Count; i++)
+        {
+            if (!cardList[i].IsFlipped)
+            {
+                cardList[i].Flip();
+            }
+        }
+        
+        UIManager.Instance.BlockClick();
+        yield return new WaitForSeconds(time);
+        for (int i = 0; i < cardList.Count; i++)
+        {
+            cardList[i].FlipDown();
+        }
     }
 }
 

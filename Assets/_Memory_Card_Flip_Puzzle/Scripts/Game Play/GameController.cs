@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
@@ -6,12 +7,20 @@ public class GameController : MonoBehaviour
     public Card curCard1;
     public Card curCard2;
 
+    public static event Action OnAddCoin;
+
     private void Awake()
     {
         if (Instance) return;
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start()
+    {
+        GameManager.Instance.LoadLevel();
+        AudioManager.Instance.PlayMusic("Game", 0.3f);
     }
 
     public void SetCurrentCard(Card card)
@@ -76,12 +85,14 @@ public class GameController : MonoBehaviour
         }
         else
         {
+            AudioManager.Instance.PlaySFX("Incorrect");
             FlipDownCard();
         }
     }
 
     public void CoupleCardComplete()
     {
+        AudioManager.Instance.PlaySFX("Correct");
         var completePos1 = new Vector2(-CardConfig.xComplete, 0f);
         var completePos2 = new Vector2(CardConfig.xComplete, 0f);
         var time1 = Vector2.Distance(curCard1.transform.position, completePos1) / CardConfig.completeAnimSpeed;
@@ -89,6 +100,15 @@ public class GameController : MonoBehaviour
         var time12 = time1 - time2;
         curCard1.CompleteCard(completePos1, time1, time12 >= 0 ? 0 : -time12);
         curCard2.CompleteCard(completePos2, time2, -time12 >= 0 ? 0 : time12);
+
+        AddCoin(10);
+    }
+
+    public void AddCoin(int coinValue)
+    {
+        GameManager.Instance.gameData.coin += coinValue;
+        UIManager.Instance.coinText.text = GameManager.Instance.gameData.coin.ToString();
+        OnAddCoin?.Invoke();
     }
 
     private bool CanCheckLegit()
