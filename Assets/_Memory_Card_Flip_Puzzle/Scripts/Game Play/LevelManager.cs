@@ -1,29 +1,106 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class LevelManager : MonoBehaviour
 {
-    [Header("LEVEL DATA")]
-    public LevelData levelData;
+    [Header("LEVEL DATA")] public LevelData levelData;
 
-    [Header("CARD MANAGER")]
-    [SerializeField] private List<int> indexList = new List<int>();
+    [Header("CARD MANAGER")] [SerializeField]
+    private List<int> indexList = new List<int>();
+
     [SerializeField] private List<int> cardIndexList = new List<int>();
     public List<Card> cardList;
 
-    private List<Transform> cardsParent;
-    
+    [SerializeField] private List<Transform> cardsParent;
+
     private void Awake()
     {
+        cardsParent = new List<Transform>();
         cardsParent = GetComponentsInChildren<Transform>().ToList();
         cardsParent.RemoveAt(0);
     }
 
+#if UNITY_EDITOR
+    private const float sizeObject = 1;
+    private float spacing => sizeObject + levelData.padding;
+
+    [ContextMenu("Clear Child")]
+    public void DestroyChildAndClearList()
+    {
+        for (int i = transform.childCount - 1; i >= 0; i--)
+        {
+            DestroyImmediate(transform.GetChild(i).gameObject);
+        }
+
+        cardsParent.Clear();
+    }
+
+    [ContextMenu("Generate Map")]
+    public void GenerateGrid()
+    {
+        DestroyChildAndClearList();
+
+        float startX = -(levelData.cols - 1) * spacing / 2f;
+        float startY = (levelData.rows - 1) * spacing / 2f;
+
+        int index = 0;
+        for (int i = 0; i < levelData.rows; i++)
+        {
+            for (int j = 0; j < levelData.cols; j++)
+            {
+                index++;
+                Vector3 position = new Vector3(startX + j * spacing, startY - i * spacing, 0);
+                var obj = new GameObject($"Element {index}");
+                obj.transform.SetParent(transform);
+                obj.transform.position = position;
+                cardsParent.Add(obj.transform);
+            }
+        }
+    }
+
+
+    [ContextMenu("Generate Demo")]
+    public void GenerateGridDemo()
+    {
+        var pathObj = $"Assets/_Memory_Card_Flip_Puzzle/Prefabs/Demo.prefab";
+        DestroyChildAndClearList();
+
+        var objDemo = AssetDatabase.LoadAssetAtPath<GameObject>(pathObj);
+        if (!objDemo)
+        {
+            Debug.LogError($"Không có prefab tại đường dẫn: ---- {pathObj}");
+            return;
+        }
+
+        float startX = -(levelData.cols - 1) * spacing / 2f;
+        float startY = (levelData.rows - 1) * spacing / 2f;
+
+        int index = 0;
+        for (int i = 0; i < levelData.rows; i++)
+        {
+            for (int j = 0; j < levelData.cols; j++)
+            {
+                index++;
+                Vector3 position = new Vector3(startX + j * spacing, startY - i * spacing, 0);
+                var obj = Instantiate(objDemo, transform, true);
+                obj.name = $"Demo {index}";
+                obj.transform.position = position;
+                cardsParent.Add(obj.transform);
+            }
+        }
+    }
+
+#endif
+
+
     public void Initialize()
     {
+        Camera.main.orthographicSize = levelData.cameraSize;
         indexList.Clear();
         cardIndexList.Clear();
         int totalCard = GameManager.Instance.cardDataManager.cardData.Count;
@@ -32,11 +109,6 @@ public class LevelManager : MonoBehaviour
         {
             indexList.Add(i);
         }
-        
-        // for (int i = 0; i < cardIndexList.Count; i++)
-        // {
-        //     Debug.Log(cardIndexList[i]);
-        // }
 
         CreateCardData();
         SpawnCards();
@@ -53,7 +125,8 @@ public class LevelManager : MonoBehaviour
 
     private void SpawnCard(int idCard, int childIndex)
     {
-        var card = PoolingManager.Spawn(GameManager.Instance.cardPrefab, cardsParent[childIndex].position, Quaternion.identity);
+        var card = PoolingManager.Spawn(GameManager.Instance.cardPrefab, cardsParent[childIndex].position,
+            Quaternion.identity);
         card.transform.SetParent(cardsParent[childIndex]);
         card.Init(GameManager.Instance.cardDataManager.cardData[idCard]);
     }
@@ -101,6 +174,9 @@ public class LevelManager : MonoBehaviour
 [Serializable]
 public class LevelData
 {
+    [Range(2, 15)] public int rows = 2;
+    [Range(2, 10)] public int cols = 2;
+    [Range(2.5f, 4f)] public float padding = 2.5f;
     public int cardCoupleCount;
     public float time;
     public float cameraSize;
